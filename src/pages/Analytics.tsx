@@ -473,10 +473,11 @@ const Analytics = () => {
         <div style={{
           marginTop: '2rem',
           padding: '2rem',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: 'linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%)',
           borderRadius: 'var(--radius-lg)',
           color: 'white',
-          textAlign: 'center'
+          textAlign: 'center',
+          boxShadow: 'var(--glow-pink)'
         }}>
           <h3 style={{ marginBottom: '0.5rem', color: 'white' }}>Keep Going, Milo! 🎓</h3>
           <p style={{ fontSize: '1.125rem', opacity: 0.9 }}>

@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter, AlertCircle } from 'lucide-react';
+import { Plus, Search, Filter, AlertCircle, Sparkles } from 'lucide-react';
 import { University, Region, SchoolSize, ApplicationStatus } from '../types';
 import { getUniversities, deleteUniversity } from '../utils/storage';
 import { sortUniversities, isDeadlineApproaching, isOverdue } from '../utils/helpers';
+import { isAPIKeyConfigured } from '../utils/openai';
 import UniversityCard from '../components/UniversityCard';
 import AddUniversityModal from '../components/AddUniversityModal';
+import SmartUniversitySearch from '../components/SmartUniversitySearch';
 
 const Dashboard = () => {
   const [universities, setUniversities] = useState<University[]>([]);
   const [filteredUniversities, setFilteredUniversities] = useState<University[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isSmartSearchOpen, setIsSmartSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRegion, setSelectedRegion] = useState<Region | 'all'>('all');
   const [selectedSize, setSelectedSize] = useState<SchoolSize | 'all'>('all');
@@ -101,13 +104,28 @@ const Dashboard = () => {
               <strong style={{ color: 'var(--primary)' }}>You've got this!</strong> Every step you take here brings you closer to your goals.
             </p>
           </div>
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="btn btn-primary btn-lg"
-          >
-            <Plus size={20} />
-            Add University
-          </button>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setIsSmartSearchOpen(true)}
+              className="btn btn-primary btn-lg"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <Sparkles size={20} />
+              Smart Search
+              {isAPIKeyConfigured() && (
+                <span className="badge" style={{ backgroundColor: '#34D399', color: 'white', fontSize: '0.625rem' }}>
+                  AI
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="btn btn-secondary btn-lg"
+            >
+              <Plus size={20} />
+              Add Manually
+            </button>
+          </div>
         </div>
 
         {/* Alerts */}
@@ -298,15 +316,26 @@ const Dashboard = () => {
           {universities.length === 0 && (
             <>
               <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1.5rem', fontStyle: 'italic' }}>
-                💡 Tip: Also check out the <strong>Soccer</strong> section to start your recruiting process!
+                💡 Tip: Use <strong style={{ color: 'var(--primary)' }}>Smart Search</strong> with AI to automatically research universities!
+                <br/>
+                Also check out the <strong>Soccer</strong> section to start your recruiting process.
               </p>
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="btn btn-primary"
-              >
-                <Plus size={20} />
-                Add Your First University
-              </button>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setIsSmartSearchOpen(true)}
+                  className="btn btn-primary"
+                >
+                  <Sparkles size={20} />
+                  Smart Search University
+                </button>
+                <button
+                  onClick={() => setIsAddModalOpen(true)}
+                  className="btn btn-secondary"
+                >
+                  <Plus size={20} />
+                  Or Add Manually
+                </button>
+              </div>
             </>
           )}
         </div>
@@ -378,6 +407,17 @@ const Dashboard = () => {
         <AddUniversityModal
           onClose={() => setIsAddModalOpen(false)}
           onAdd={handleAddUniversity}
+        />
+      )}
+
+      {/* Smart Search Modal */}
+      {isSmartSearchOpen && (
+        <SmartUniversitySearch
+          onClose={() => setIsSmartSearchOpen(false)}
+          onAdd={() => {
+            loadUniversities();
+            setIsSmartSearchOpen(false);
+          }}
         />
       )}
     </div>

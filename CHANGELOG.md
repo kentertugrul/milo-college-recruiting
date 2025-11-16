@@ -2,6 +2,36 @@
 
 All notable changes to the College Application Tracker will be documented in this file.
 
+## [2.1.0] - 2025-11-16
+
+### Major Feature: AI-Powered Smart University Search
+
+**Intelligent University Research**
+- ✨ Smart Search button with AI-powered university lookup
+- 🤖 OpenAI integration for automatic data population
+- 🔍 Searches and retrieves: location, region, school size, deadlines, overview
+- ⚽ Automatically detects and adds soccer programs
+- 🏆 Fetches division level, conference, and team URLs
+- ✅ Confirmation dialog with edit capability before adding
+- 🔑 Secure API key storage (stored locally, never shared)
+- 💾 One-click add universities with complete information
+
+**How It Works**
+1. Click "Smart Search" button
+2. Enter university name (e.g., "Stanford")
+3. AI researches and populates all data
+4. Review and edit information
+5. Confirm to add to your list (including soccer program if available)
+
+**Features**
+- Automatic application deadline research
+- Soccer program detection and creation
+- Conference and division information
+- Official website links
+- School size and region classification
+- Comprehensive university overview
+- Editable results before saving
+
 ## [2.0.1] - 2025-11-16
 
 ### Personalization & User Experience Enhancements

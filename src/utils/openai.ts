@@ -3,6 +3,13 @@
 const OPENAI_API_KEY_STORAGE = 'milo_openai_api_key';
 
 export const getOpenAIKey = (): string | null => {
+  // First check environment variable (for development)
+  const envKey = import.meta.env.VITE_OPENAI_API_KEY;
+  if (envKey) {
+    return envKey;
+  }
+  
+  // Fall back to localStorage (for user-entered keys)
   return localStorage.getItem(OPENAI_API_KEY_STORAGE);
 };
 

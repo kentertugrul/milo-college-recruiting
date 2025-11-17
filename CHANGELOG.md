@@ -2,6 +2,38 @@
 
 All notable changes to the College Application Tracker will be documented in this file.
 
+## [3.0.0] - 2025-11-16
+
+### Major Feature: Password Protection
+
+**Secure Login System**
+- 🔒 Password-protected access to the entire site
+- 🎨 Beautiful login page with pink gradient branding
+- ⏰ 24-hour session duration
+- 🚪 Logout button in navigation
+- 💾 Secure session storage
+- 🔐 Default password: `Milo2025!` (changeable in code)
+
+**Security Features**
+- Session expires after 24 hours
+- Logout confirmation dialog
+- Password verification on every access
+- Shake animation on incorrect password
+- Hint shown after 3 failed attempts
+
+**User Experience**
+- Clean, modern login interface
+- Gradient logo with pink glow
+- Welcome message
+- Privacy assurance
+- Responsive design
+
+**AI Integration**
+- 🤖 OpenAI API key hardcoded for authenticated users
+- ✨ Smart Search works immediately after login
+- No need to configure API key
+- Seamless university research experience
+
 ## [2.2.0] - 2025-11-16
 
 ### Feature: Admission Statistics Tracking

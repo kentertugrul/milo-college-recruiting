@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
+import LoginPage from './components/LoginPage';
 import Dashboard from './pages/Dashboard';
 import UniversityDetail from './pages/UniversityDetail';
 import Communications from './pages/Communications';
@@ -8,6 +10,12 @@ import Analytics from './pages/Analytics';
 import SoccerDashboard from './pages/SoccerDashboard';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
   return (
     <Router>
       <Layout>

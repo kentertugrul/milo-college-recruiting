@@ -3,7 +3,6 @@ import { Plus, Search, Filter, AlertCircle, Sparkles } from 'lucide-react';
 import { University, Region, SchoolSize, ApplicationStatus } from '../types';
 import { getUniversities, deleteUniversity } from '../utils/storage';
 import { sortUniversities, isDeadlineApproaching, isOverdue } from '../utils/helpers';
-import { isAPIKeyConfigured } from '../utils/openai';
 import UniversityCard from '../components/UniversityCard';
 import AddUniversityModal from '../components/AddUniversityModal';
 import SmartUniversitySearch from '../components/SmartUniversitySearch';
@@ -112,11 +111,9 @@ const Dashboard = () => {
             >
               <Sparkles size={20} />
               Smart Search
-              {isAPIKeyConfigured() && (
-                <span className="badge" style={{ backgroundColor: '#34D399', color: 'white', fontSize: '0.625rem' }}>
-                  AI
-                </span>
-              )}
+              <span className="badge" style={{ backgroundColor: '#34D399', color: 'white', fontSize: '0.625rem' }}>
+                AI
+              </span>
             </button>
             <button
               onClick={() => setIsAddModalOpen(true)}

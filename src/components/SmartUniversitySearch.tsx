@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Search, Loader, Check, X, Sparkles, AlertCircle, Key } from 'lucide-react';
-import { searchUniversity, UniversityResearchData, isAPIKeyConfigured, setOpenAIKey } from '../utils/openai';
+import { Search, Loader, Check, X, Sparkles, AlertCircle } from 'lucide-react';
+import { searchUniversity, UniversityResearchData } from '../utils/openai';
 import { University, SoccerProgram } from '../types';
 import { addUniversity, addSoccerProgram } from '../utils/storage';
 import { generateId } from '../utils/helpers';
@@ -15,10 +15,7 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
   const [isSearching, setIsSearching] = useState(false);
   const [researchData, setResearchData] = useState<UniversityResearchData | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showAPIKeyPrompt, setShowAPIKeyPrompt] = useState(false);
-  const [apiKey, setApiKeyInput] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [hasAPIKey] = useState(isAPIKeyConfigured());
   
   // Editable form state
   const [formData, setFormData] = useState<Partial<UniversityResearchData>>({});
@@ -37,27 +34,11 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message || 'Failed to search university. Please try again.');
-      if (err.message?.includes('API key')) {
-        setShowAPIKeyPrompt(true);
-      }
     } finally {
       setIsSearching(false);
     }
   };
 
-  const handleSaveAPIKey = () => {
-    if (apiKey.trim()) {
-      setOpenAIKey(apiKey.trim());
-      setShowAPIKeyPrompt(false);
-      setApiKeyInput('');
-      // Reload to pick up the new key
-      window.location.reload();
-    }
-  };
-
-  const handleShowAPIKeyPrompt = () => {
-    setShowAPIKeyPrompt(true);
-  };
 
   const handleConfirmAndAdd = () => {
     if (!formData) return;
@@ -138,62 +119,6 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
           </button>
         </div>
 
-        {/* API Key Status */}
-        {hasAPIKey && (
-          <div style={{
-            padding: '1rem',
-            backgroundColor: 'rgba(52, 211, 153, 0.1)',
-            border: '1px solid var(--success)',
-            borderRadius: 'var(--radius)',
-            marginBottom: '1.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.875rem'
-          }}>
-            <Check size={18} color="var(--success)" />
-            <span style={{ color: 'var(--success)', fontWeight: 600 }}>
-              ✓ API Key Configured - Ready to search!
-            </span>
-          </div>
-        )}
-
-        {/* API Key Prompt */}
-        {!hasAPIKey && showAPIKeyPrompt && (
-          <div style={{
-            padding: '1.5rem',
-            backgroundColor: 'rgba(236, 72, 153, 0.1)',
-            border: '2px solid var(--primary)',
-            borderRadius: 'var(--radius-lg)',
-            marginBottom: '1.5rem'
-          }}>
-            <h3 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)' }}>
-              <Key size={20} />
-              OpenAI API Key Required
-            </h3>
-            <p style={{ fontSize: '0.875rem', marginBottom: '1rem', color: 'var(--text-secondary)' }}>
-              To use smart university search, you need an OpenAI API key. This enables automatic research and data population.
-              <br /><br />
-              <strong>Get your API key:</strong> <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" style={{ color: 'var(--primary)' }}>platform.openai.com/api-keys</a>
-            </p>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKeyInput(e.target.value)}
-                placeholder="sk-..."
-                style={{ flex: 1 }}
-              />
-              <button onClick={handleSaveAPIKey} className="btn btn-primary">
-                <Key size={16} />
-                Save Key
-              </button>
-            </div>
-            <p style={{ fontSize: '0.75rem', marginTop: '0.5rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-              💡 Your API key is stored locally and never shared. You can remove it anytime.
-            </p>
-          </div>
-        )}
 
         {/* Search Input */}
         <div style={{ marginBottom: '2rem' }}>
@@ -223,12 +148,12 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
                 }}
                 placeholder="e.g., Harvard University, Stanford, MIT..."
                 style={{ paddingLeft: '2.5rem' }}
-                disabled={isSearching || (!hasAPIKey && showAPIKeyPrompt)}
+                disabled={isSearching}
               />
             </div>
             <button
               onClick={handleSearch}
-              disabled={isSearching || !searchQuery.trim() || (!hasAPIKey && showAPIKeyPrompt)}
+              disabled={isSearching || !searchQuery.trim()}
               className="btn btn-primary"
               style={{ minWidth: '120px' }}
             >
@@ -245,21 +170,9 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
               )}
             </button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-              💡 AI will automatically research the university and populate all available information
-            </p>
-            {!hasAPIKey && (
-              <button
-                onClick={handleShowAPIKeyPrompt}
-                className="btn btn-secondary btn-sm"
-                style={{ fontSize: '0.75rem' }}
-              >
-                <Key size={14} />
-                Add API Key
-              </button>
-            )}
-          </div>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', fontStyle: 'italic' }}>
+            💡 AI will automatically research the university and populate all available information
+          </p>
         </div>
 
         {/* Loading State */}

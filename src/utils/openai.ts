@@ -1,15 +1,19 @@
 // OpenAI API integration for university research
 
+// API key from environment variable (set in .env.local or deployment)
+// For local: add to .env.local
+// For deployment: add as GitHub secret and environment variable
+const API_KEY_FROM_ENV = import.meta.env.VITE_OPENAI_API_KEY as string | undefined;
+
 const OPENAI_API_KEY_STORAGE = 'milo_openai_api_key';
 
 export const getOpenAIKey = (): string | null => {
-  // First check environment variable (for development)
-  const envKey = import.meta.env.VITE_OPENAI_API_KEY;
-  if (envKey) {
-    return envKey;
+  // Priority 1: Environment variable (recommended)
+  if (API_KEY_FROM_ENV) {
+    return API_KEY_FROM_ENV;
   }
   
-  // Fall back to localStorage (for user-entered keys)
+  // Priority 2: Fall back to localStorage
   return localStorage.getItem(OPENAI_API_KEY_STORAGE);
 };
 

@@ -8,9 +8,11 @@ import {
   Menu,
   X,
   GraduationCap,
-  Trophy
+  Trophy,
+  LogOut
 } from 'lucide-react';
 import { getReminders } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,8 +20,15 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
+  const { logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [upcomingRemindersCount, setUpcomingRemindersCount] = useState(0);
+
+  const handleLogout = () => {
+    if (confirm('Are you sure you want to log out?')) {
+      logout();
+    }
+  };
 
   useEffect(() => {
     const checkReminders = () => {
@@ -155,6 +164,21 @@ const Layout = ({ children }: LayoutProps) => {
             })}
           </nav>
 
+          {/* Logout Button (Desktop) */}
+          <button
+            onClick={handleLogout}
+            className="btn btn-secondary"
+            style={{
+              display: 'none',
+              padding: '0.5rem 1rem',
+              gap: '0.5rem'
+            }}
+            title="Logout"
+          >
+            <LogOut size={18} />
+            <span className="logout-text">Logout</span>
+          </button>
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -249,6 +273,10 @@ const Layout = ({ children }: LayoutProps) => {
           display: none;
         }
         
+        .btn.btn-secondary[title="Logout"] {
+          display: none;
+        }
+        
         @media (min-width: 768px) {
           .desktop-nav {
             display: flex;
@@ -256,10 +284,16 @@ const Layout = ({ children }: LayoutProps) => {
           .mobile-menu-btn {
             display: none !important;
           }
+          .btn.btn-secondary[title="Logout"] {
+            display: flex;
+          }
         }
         
         @media (max-width: 767px) {
           .desktop-nav {
+            display: none;
+          }
+          .logout-text {
             display: none;
           }
         }

@@ -15,9 +15,10 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
   const [isSearching, setIsSearching] = useState(false);
   const [researchData, setResearchData] = useState<UniversityResearchData | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showAPIKeyPrompt, setShowAPIKeyPrompt] = useState(!isAPIKeyConfigured());
+  const [showAPIKeyPrompt, setShowAPIKeyPrompt] = useState(false);
   const [apiKey, setApiKeyInput] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const [hasAPIKey] = useState(isAPIKeyConfigured());
   
   // Editable form state
   const [formData, setFormData] = useState<Partial<UniversityResearchData>>({});
@@ -49,7 +50,13 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
       setOpenAIKey(apiKey.trim());
       setShowAPIKeyPrompt(false);
       setApiKeyInput('');
+      // Reload to pick up the new key
+      window.location.reload();
     }
+  };
+
+  const handleShowAPIKeyPrompt = () => {
+    setShowAPIKeyPrompt(true);
   };
 
   const handleConfirmAndAdd = () => {
@@ -131,8 +138,28 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
           </button>
         </div>
 
+        {/* API Key Status */}
+        {hasAPIKey && (
+          <div style={{
+            padding: '1rem',
+            backgroundColor: 'rgba(52, 211, 153, 0.1)',
+            border: '1px solid var(--success)',
+            borderRadius: 'var(--radius)',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontSize: '0.875rem'
+          }}>
+            <Check size={18} color="var(--success)" />
+            <span style={{ color: 'var(--success)', fontWeight: 600 }}>
+              ✓ API Key Configured - Ready to search!
+            </span>
+          </div>
+        )}
+
         {/* API Key Prompt */}
-        {showAPIKeyPrompt && (
+        {!hasAPIKey && showAPIKeyPrompt && (
           <div style={{
             padding: '1.5rem',
             backgroundColor: 'rgba(236, 72, 153, 0.1)',
@@ -196,12 +223,12 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
                 }}
                 placeholder="e.g., Harvard University, Stanford, MIT..."
                 style={{ paddingLeft: '2.5rem' }}
-                disabled={isSearching || showAPIKeyPrompt}
+                disabled={isSearching || (!hasAPIKey && showAPIKeyPrompt)}
               />
             </div>
             <button
               onClick={handleSearch}
-              disabled={isSearching || !searchQuery.trim() || showAPIKeyPrompt}
+              disabled={isSearching || !searchQuery.trim() || (!hasAPIKey && showAPIKeyPrompt)}
               className="btn btn-primary"
               style={{ minWidth: '120px' }}
             >
@@ -218,9 +245,21 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
               )}
             </button>
           </div>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', fontStyle: 'italic' }}>
-            💡 AI will automatically research the university and populate all available information
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+              💡 AI will automatically research the university and populate all available information
+            </p>
+            {!hasAPIKey && (
+              <button
+                onClick={handleShowAPIKeyPrompt}
+                className="btn btn-secondary btn-sm"
+                style={{ fontSize: '0.75rem' }}
+              >
+                <Key size={14} />
+                Add API Key
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Loading State */}

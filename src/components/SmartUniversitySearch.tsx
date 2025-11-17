@@ -68,6 +68,12 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
       applicationDeadline: formData.applicationDeadline || '',
       earlyDeadline: formData.earlyDeadline,
       notes: formData.notes || '',
+      admissionRate: formData.admissionRate,
+      averageIB: formData.averageIB,
+      averageGPA: formData.averageGPA,
+      averageSAT: formData.averageSAT,
+      averageACT: formData.averageACT,
+      admissionStatsNotes: formData.admissionStatsNotes,
       checklist: [],
       essays: [],
       interviews: [],
@@ -419,6 +425,65 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
                     </div>
                   )}
                 </div>
+
+                {/* Admission Statistics */}
+                {(formData.admissionRate || formData.averageIB || formData.averageGPA || formData.averageSAT || formData.averageACT) && (
+                  <div style={{
+                    padding: '1rem',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    border: '1px solid var(--primary)',
+                    borderRadius: 'var(--radius)',
+                  }}>
+                    <h5 style={{ marginBottom: '0.75rem', color: 'var(--primary)' }}>📊 Admission Statistics</h5>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '0.75rem', fontSize: '0.875rem' }}>
+                      {formData.admissionRate !== undefined && (
+                        <div>
+                          <strong>Acceptance Rate:</strong><br/>
+                          <span style={{ fontSize: '1.25rem', color: 'var(--primary)', fontWeight: 700 }}>
+                            {(formData.admissionRate * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      )}
+                      {formData.averageIB !== undefined && (
+                        <div>
+                          <strong>Average IB:</strong><br/>
+                          <span style={{ fontSize: '1.25rem', color: 'var(--primary)', fontWeight: 700 }}>
+                            {formData.averageIB}
+                          </span>
+                        </div>
+                      )}
+                      {formData.averageGPA !== undefined && (
+                        <div>
+                          <strong>Average GPA:</strong><br/>
+                          <span style={{ fontSize: '1.25rem', color: 'var(--primary)', fontWeight: 700 }}>
+                            {formData.averageGPA.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      {formData.averageSAT !== undefined && (
+                        <div>
+                          <strong>Average SAT:</strong><br/>
+                          <span style={{ fontSize: '1.25rem', color: 'var(--primary)', fontWeight: 700 }}>
+                            {formData.averageSAT}
+                          </span>
+                        </div>
+                      )}
+                      {formData.averageACT !== undefined && (
+                        <div>
+                          <strong>Average ACT:</strong><br/>
+                          <span style={{ fontSize: '1.25rem', color: 'var(--primary)', fontWeight: 700 }}>
+                            {formData.averageACT}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {formData.admissionStatsNotes && (
+                      <p style={{ fontSize: '0.875rem', marginTop: '0.75rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                        💡 {formData.admissionStatsNotes}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

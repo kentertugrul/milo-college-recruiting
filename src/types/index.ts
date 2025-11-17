@@ -36,6 +36,13 @@ export interface University {
   checklist: ChecklistItem[];
   essays: Essay[];
   interviews: Interview[];
+  // Admission Statistics
+  admissionRate?: number; // e.g., 0.05 for 5%
+  averageIB?: number; // e.g., 40-42
+  averageGPA?: number; // e.g., 3.9 (out of 4.0)
+  averageSAT?: number; // e.g., 1500
+  averageACT?: number; // e.g., 33
+  admissionStatsNotes?: string; // Additional context
   createdAt: string;
   updatedAt: string;
 }

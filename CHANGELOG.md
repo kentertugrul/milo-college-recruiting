@@ -2,6 +2,39 @@
 
 All notable changes to the College Application Tracker will be documented in this file.
 
+## [2.2.0] - 2025-11-16
+
+### Feature: Admission Statistics Tracking
+
+**Comprehensive Admission Data**
+- 📊 Track acceptance rates for each university
+- 🎓 Record average IB scores of admitted students
+- 📝 Store average GPA requirements
+- 📈 Track average SAT and ACT scores
+- 💡 Save notes about what schools look for in applicants
+
+**AI Auto-Population**
+- ✨ Smart Search automatically fetches admission statistics
+- 🤖 AI researches and provides: acceptance rate, IB average, GPA, SAT, ACT
+- 📋 Contextual notes about competitiveness and applicant profiles
+
+**Manual Entry**
+- ➕ Add admission stats when manually creating universities
+- ✏️ Edit stats anytime through university edit modal
+- 🔢 Input validation (acceptance rate 0-100%, IB 24-45, GPA 0-4.0, etc.)
+
+**Display Everywhere**
+- 🏠 University cards show admission stats in pink-highlighted box
+- 📄 University detail page has dedicated admission statistics section
+- 💖 Pink accent styling for easy identification
+- 📊 Large, clear numbers for quick reference
+
+**Why This Matters**
+- Know your chances at each school
+- Compare your IB/GPA to averages
+- Set realistic expectations
+- Plan reach/target/safety schools strategically
+
 ## [2.1.0] - 2025-11-16
 
 ### Major Feature: AI-Powered Smart University Search

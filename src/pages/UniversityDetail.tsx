@@ -307,17 +307,95 @@ const UniversityDetail = () => {
 
       {/* Tab Content */}
       {activeTab === 'overview' && (
-        <div className="card">
-          <h3 style={{ marginBottom: '1rem' }}>Notes</h3>
-          <textarea
-            value={university.notes}
-            onChange={(e) => handleNotesChange(e.target.value)}
-            placeholder="Add notes about this university, requirements, impressions, etc."
-            rows={10}
-            style={{ marginBottom: '1rem' }}
-          />
-          <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-            Last updated: {formatDateTime(university.updatedAt)}
+        <div>
+          {/* Admission Statistics */}
+          {(university.admissionRate || university.averageIB || university.averageGPA || university.averageSAT || university.averageACT) && (
+            <div className="card" style={{ 
+              marginBottom: '2rem',
+              background: 'rgba(236, 72, 153, 0.05)',
+              border: '2px solid var(--primary)'
+            }}>
+              <h3 style={{ marginBottom: '1rem', color: 'var(--primary)' }}>📊 Admission Statistics</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.5rem' }}>
+                {university.admissionRate !== undefined && (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      Acceptance Rate
+                    </div>
+                    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                      {(university.admissionRate * 100).toFixed(1)}%
+                    </div>
+                  </div>
+                )}
+                {university.averageIB !== undefined && (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      Average IB Score
+                    </div>
+                    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                      {university.averageIB}
+                    </div>
+                  </div>
+                )}
+                {university.averageGPA !== undefined && (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      Average GPA
+                    </div>
+                    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                      {university.averageGPA.toFixed(2)}
+                    </div>
+                  </div>
+                )}
+                {university.averageSAT !== undefined && (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      Average SAT
+                    </div>
+                    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                      {university.averageSAT}
+                    </div>
+                  </div>
+                )}
+                {university.averageACT !== undefined && (
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>
+                      Average ACT
+                    </div>
+                    <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                      {university.averageACT}
+                    </div>
+                  </div>
+                )}
+              </div>
+              {university.admissionStatsNotes && (
+                <div style={{ 
+                  marginTop: '1rem', 
+                  padding: '1rem', 
+                  backgroundColor: 'var(--bg-primary)',
+                  borderRadius: 'var(--radius)',
+                  fontSize: '0.875rem',
+                  lineHeight: 1.6
+                }}>
+                  <strong>💡 What They Look For:</strong> {university.admissionStatsNotes}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Notes */}
+          <div className="card">
+            <h3 style={{ marginBottom: '1rem' }}>Notes</h3>
+            <textarea
+              value={university.notes}
+              onChange={(e) => handleNotesChange(e.target.value)}
+              placeholder="Add notes about this university, requirements, impressions, etc."
+              rows={10}
+              style={{ marginBottom: '1rem' }}
+            />
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              Last updated: {formatDateTime(university.updatedAt)}
+            </div>
           </div>
         </div>
       )}

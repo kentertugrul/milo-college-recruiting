@@ -29,6 +29,13 @@ export interface UniversityResearchData {
   applicationDeadline: string;
   earlyDeadline?: string;
   notes: string;
+  // Admission Statistics
+  admissionRate?: number;
+  averageIB?: number;
+  averageGPA?: number;
+  averageSAT?: number;
+  averageACT?: number;
+  admissionStatsNotes?: string;
   // Soccer data
   hasSoccerProgram: boolean;
   soccerProgramName?: string;
@@ -60,6 +67,12 @@ Return a JSON object with this exact structure (use null for unknown fields):
   "applicationDeadline": "Typical regular decision deadline in YYYY-MM-DD format (use next year's likely date)",
   "earlyDeadline": "Early decision/action deadline in YYYY-MM-DD format if applicable, or null",
   "notes": "Brief 2-3 sentence overview covering academics, notable programs, campus culture, and any unique features",
+  "admissionRate": decimal admission rate (e.g., 0.05 for 5%, 0.15 for 15%) or null,
+  "averageIB": typical IB score of admitted students (e.g., 40, 42) or null,
+  "averageGPA": average unweighted GPA of admitted students on 4.0 scale (e.g., 3.9) or null,
+  "averageSAT": average SAT score (e.g., 1500) or null,
+  "averageACT": average ACT score (e.g., 33) or null,
+  "admissionStatsNotes": "Brief note about admission competitiveness and what they look for in applicants" or null,
   "hasSoccerProgram": true/false,
   "soccerProgramName": "Official team name (e.g., 'Stanford Cardinal Men's Soccer') or null",
   "soccerLevel": "D1, D2, D3, or Club (null if no program)",
@@ -119,6 +132,12 @@ Important: Return ONLY the JSON object, no additional text or markdown.`;
       applicationDeadline: universityData.applicationDeadline,
       earlyDeadline: universityData.earlyDeadline || undefined,
       notes: universityData.notes || '',
+      admissionRate: universityData.admissionRate || undefined,
+      averageIB: universityData.averageIB || undefined,
+      averageGPA: universityData.averageGPA || undefined,
+      averageSAT: universityData.averageSAT || undefined,
+      averageACT: universityData.averageACT || undefined,
+      admissionStatsNotes: universityData.admissionStatsNotes || undefined,
       hasSoccerProgram: universityData.hasSoccerProgram || false,
       soccerProgramName: universityData.soccerProgramName || undefined,
       soccerLevel: universityData.soccerLevel || undefined,

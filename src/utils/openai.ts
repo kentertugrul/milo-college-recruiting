@@ -54,6 +54,8 @@ export interface UniversityResearchData {
 export const searchUniversity = async (universityName: string): Promise<UniversityResearchData | null> => {
   const apiKey = getOpenAIKey();
   
+  console.log('🔑 API Key status:', apiKey ? 'Found (' + apiKey.substring(0, 20) + '...)' : 'Not found');
+  
   if (!apiKey) {
     throw new Error('OpenAI API key not configured');
   }

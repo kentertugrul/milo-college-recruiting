@@ -127,6 +127,9 @@ Important: Return ONLY the JSON object, no additional text or markdown.`;
     // Parse the JSON response
     const universityData = JSON.parse(content.trim());
     
+    // Debug logging
+    console.log('🤖 AI Response:', universityData);
+    
     // Map to our interface
     const result: UniversityResearchData = {
       name: universityData.name,

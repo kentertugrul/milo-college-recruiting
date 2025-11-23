@@ -181,47 +181,44 @@ const UniversityCard = ({ university, onDelete }: UniversityCardProps) => {
         </div>
       )}
 
-      {/* Admission Stats */}
-      {(university.admissionRate || university.averageIB || university.averageGPA) && (
-        <div style={{
-          padding: '0.75rem',
-          backgroundColor: 'rgba(236, 72, 153, 0.1)',
-          border: '1px solid var(--primary)',
-          borderRadius: 'var(--radius)',
-          marginBottom: '1rem'
-        }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--primary)' }}>
-            📊 ADMISSION STATS
+      {/* Admission Stats - Always Show */}
+      <div style={{
+        padding: '0.75rem',
+        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+        border: '1px solid var(--primary)',
+        borderRadius: 'var(--radius)',
+        marginBottom: '1rem'
+      }}>
+        <div style={{ fontSize: '0.75rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--primary)' }}>
+          📊 ADMISSION STATS
+        </div>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', fontSize: '0.875rem' }}>
+          <div>
+            <strong>Accept:</strong>{' '}
+            <span style={{ color: university.admissionRate !== undefined ? 'var(--primary)' : 'var(--text-secondary)', fontWeight: 700 }}>
+              {university.admissionRate !== undefined ? `${(university.admissionRate * 100).toFixed(1)}%` : 'N/A'}
+            </span>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', fontSize: '0.875rem' }}>
-            {university.admissionRate !== undefined && (
-              <div>
-                <strong>Accept:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{(university.admissionRate * 100).toFixed(1)}%</span>
-              </div>
-            )}
-            {university.averageIB !== undefined && (
-              <div>
-                <strong>IB:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{university.averageIB}</span>
-              </div>
-            )}
-            {university.averageGPA !== undefined && (
-              <div>
-                <strong>GPA:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{university.averageGPA.toFixed(2)}</span>
-              </div>
-            )}
-            {university.averageSAT !== undefined && (
-              <div>
-                <strong>SAT:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{university.averageSAT}</span>
-              </div>
-            )}
-            {university.averageACT !== undefined && (
-              <div>
-                <strong>ACT:</strong> <span style={{ color: 'var(--primary)', fontWeight: 700 }}>{university.averageACT}</span>
-              </div>
-            )}
+          <div>
+            <strong>IB:</strong>{' '}
+            <span style={{ color: university.averageIB !== undefined ? 'var(--primary)' : 'var(--text-secondary)', fontWeight: 700 }}>
+              {university.averageIB !== undefined ? university.averageIB : 'N/A'}
+            </span>
+          </div>
+          <div>
+            <strong>GPA:</strong>{' '}
+            <span style={{ color: university.averageGPA !== undefined ? 'var(--primary)' : 'var(--text-secondary)', fontWeight: 700 }}>
+              {university.averageGPA !== undefined ? university.averageGPA.toFixed(2) : 'N/A'}
+            </span>
+          </div>
+          <div>
+            <strong>SAT:</strong>{' '}
+            <span style={{ color: university.averageSAT !== undefined ? 'var(--primary)' : 'var(--text-secondary)', fontWeight: 700 }}>
+              {university.averageSAT !== undefined ? university.averageSAT : 'N/A'}
+            </span>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Notes Preview */}
       {university.notes && (

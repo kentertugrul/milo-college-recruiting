@@ -29,10 +29,12 @@ const SmartUniversitySearch = ({ onClose, onAdd }: SmartUniversitySearchProps) =
 
     try {
       const data = await searchUniversity(searchQuery);
+      console.log('📊 Received university data:', data);
       setResearchData(data);
       setFormData(data || {});
       setIsEditing(false);
     } catch (err: any) {
+      console.error('❌ Search error:', err);
       setError(err.message || 'Failed to search university. Please try again.');
     } finally {
       setIsSearching(false);
